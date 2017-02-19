@@ -30,6 +30,20 @@ export function signinUser({email, password}){
   }
 }
 
+export function signupUser({email, password }){
+  return function(dispatch){
+    axios.post(`${ROOT_URL}/api/v1/create_user`, { email, password})
+      .then(response => {
+        dispatch({ type: AUTH_USER });
+        localStorage.setItem('token', response.data.token);
+        browserHistory.push('/dashboard');
+      })
+      .catch(() => {
+        dispatch(authError('Could not create account'));
+      });
+  }
+}
+
 export function authError(error){
   return {
     type: AUTH_ERROR,
