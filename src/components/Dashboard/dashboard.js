@@ -4,18 +4,26 @@ import * as actions from '../../actions';
 
 class Dashboard extends Component {
   componentWillMount(){
-    this.props.fetchMessage();
+    this.props.fetchWorkouts();
+  }
+
+  renderWorkouts(){
+    // console.log(this.props.workouts);
   }
 
   render() {
     return (
-      <div>{this.props.message}</div>
+      <div>
+        <ul>
+          {this.renderWorkouts()}
+        </ul>
+      </div>
     );
   }
 }
 
 function mapStateToProps(state){
-  return { message: state.auth.message };
+  return { workouts: state.workouts };
 }
 
 export default connect(mapStateToProps, actions)(Dashboard);
