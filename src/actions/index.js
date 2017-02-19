@@ -2,7 +2,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR } from './types';
 
-const ROOT_URL = 'http://localhost:8000';
+const ROOT_URL = 'http://localhost:8000/api/v1';
 
 
 // redux thunk allows us to return a FUNCTION rather than an OBJECT
@@ -18,7 +18,7 @@ export function signinUser({email, password}){
   // if request is bad...
   // show an error to the user
   return function(dispatch){
-    axios.post(`${ROOT_URL}/api/v1/authenticate`, { email, password })
+    axios.post(`${ROOT_URL}/authenticate`, { email, password })
       .then(response => {
         dispatch({ type: AUTH_USER });
         localStorage.setItem('token', response.data.token);
@@ -32,7 +32,7 @@ export function signinUser({email, password}){
 
 export function signupUser({email, password }){
   return function(dispatch){
-    axios.post(`${ROOT_URL}/api/v1/create_user`, { email, password})
+    axios.post(`${ROOT_URL}/create_user`, { email, password})
       .then(response => {
         dispatch({ type: AUTH_USER });
         localStorage.setItem('token', response.data.token);
@@ -54,4 +54,14 @@ export function authError(error){
 export function signoutUser(){
   localStorage.removeItem('token');
   return { type: UNAUTH_USER }
+}
+
+export function fetchMessage(){
+  return function(dispatch){
+    console.log(localStorage.getItem('token'));
+    axios.get(`${ROOT_URL}?token=${localStorage.getItem('token')}`)
+      .then(response => {
+        console.log(response);
+      });
+  }
 }
