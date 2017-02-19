@@ -9,9 +9,13 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>Dashboard</div>
+      <div>{this.props.message}</div>
     );
   }
 }
 
-export default connect(null, actions)(Dashboard);
+function mapStateToProps(state){
+  return { message: state.auth.message };
+}
+
+export default connect(mapStateToProps, actions)(Dashboard);
