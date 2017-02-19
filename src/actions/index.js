@@ -72,7 +72,7 @@ export function signoutUser(){
 // }
 
 export function fetchWorkouts(){
-  const request = axios.get(`${ROOT_URL}/workouts?token=${localStorage.getItem('token')}`);
+  const request = axios.get(`${ROOT_URL}/current_week?token=${localStorage.getItem('token')}`);
   return {
     type: FETCH_WORKOUTS,
     payload: request
