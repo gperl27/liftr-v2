@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR,
-         FETCH_WORKOUTS
+         FETCH_WORKOUT
        } from './types';
 
 const ROOT_URL = 'http://localhost:8000/api/v1';
@@ -47,6 +47,7 @@ export function signupUser({email, password}){
 }
 
 export function authError(error){
+  console.log(error);
   return {
     type: AUTH_ERROR,
     payload: error
@@ -58,26 +59,28 @@ export function signoutUser(){
   return { type: UNAUTH_USER }
 }
 
-// export function fetchMessage(){
-//   return function(dispatch){
-//     console.log(localStorage.getItem('token'));
-//     axios.get(`${ROOT_URL}?token=${localStorage.getItem('token')}`)
-//       .then(response => {
-//         dispatch({
-//           type: FETCH_MESSAGE,
-//           payload: response.data
-//         })
-//       });
-//   }
-// }
-
-export function fetchWorkouts(){
-  const request = axios.get(`${ROOT_URL}/current_week?token=${localStorage.getItem('token')}`);
-  return {
-    type: FETCH_WORKOUTS,
-    payload: request
+export function fetchWorkout(){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/current_workout/2017-02-19?token=${localStorage.getItem('token')}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_WORKOUT,
+          payload: response
+        });
+      })
+      .catch(() => {
+        signoutUser();
+      });
   }
 }
+
+// export function fetchWorkout(){
+//   const request = axios.get(`${ROOT_URL}/current_workout/2017-02-19?token=${localStorage.getItem('token')}`);
+//   return {
+//     type: FETCH_WORKOUT,
+//     payload: request
+//   }
+// }
 
 // ^^ as redux promise
 // export function fetchMessage(){

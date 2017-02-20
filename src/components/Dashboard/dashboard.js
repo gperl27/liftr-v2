@@ -1,29 +1,22 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import { Link } from 'react-router';
 
 class Dashboard extends Component {
-  componentWillMount(){
-    this.props.fetchWorkouts();
-  }
-
-  renderWorkouts(){
-    // console.log(this.props.workouts);
-  }
-
   render() {
     return (
-      <div>
-        <ul>
-          {this.renderWorkouts()}
-        </ul>
+      <div className="row">
+        <div className="col-md-2">
+          <ul className="list-group">
+            <li className="list-group-item"><Link className="nav-link" to="/dashboard/today">Today</Link></li>
+            <li className="list-group-item"><Link className="nav-link" to="/lastWeekToday">Last Week Today</Link></li>
+          </ul>
+        </div>
+        <div className="col-md-10">
+          {this.props.children}
+        </div>
       </div>
     );
   }
 }
 
-function mapStateToProps(state){
-  return { workouts: state.workouts };
-}
-
-export default connect(mapStateToProps, actions)(Dashboard);
+export default Dashboard;

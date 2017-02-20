@@ -1,10 +1,9 @@
-import { FETCH_WORKOUTS } from '../actions/types';
+import { FETCH_WORKOUT } from '../actions/types';
 
 export default function(state = {}, action){
   switch(action.type){
-    case FETCH_WORKOUTS:
-      console.log(action.payload.data);
-      return { ...state, workouts: action.payload.data };
+    case FETCH_WORKOUT:
+      return { ...state, workout: action.payload.data };
   }
 
   return state;
