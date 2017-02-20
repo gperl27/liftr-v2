@@ -76,7 +76,7 @@ export function fetchWorkout(){
 
 export function deleteExercise(id){
   return function(dispatch){
-    axios.post(`${ROOT_URL}/destroy_exercise?token=${localStorage.getItem('token')}`, {id})
+    axios.post(`${ROOT_URL}/exercise/destroy?token=${localStorage.getItem('token')}`, {id})
       .then(response => {
         dispatch({
           type: FETCH_WORKOUT,

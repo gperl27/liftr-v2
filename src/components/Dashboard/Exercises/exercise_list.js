@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Exercise from "./exercise";
 
-const ExerciseList = (props) => {
-  const exercises = props.exercises.map(exercise => {
-    return (
+class ExerciseList extends Component {
+  render(){
+    const exercises = this.props.exercises.map(exercise => {
+      return (
         <Exercise
-          props={props.props}
-          handleDeleteExercise={props.handleDeleteExercise}
+          props={this.props.props}
+          handleDeleteExercise={this.props.handleDeleteExercise}
           key={exercise.id}
           exercise={exercise}
-        />
+          />
       )
-  });
-
-  return (
+    });
+    return (
       <table className="table table-responsive">
         <thead>
           <tr>
@@ -28,6 +28,7 @@ const ExerciseList = (props) => {
         </tbody>
       </table>
     )
+  }
 }
 
 export default ExerciseList;
