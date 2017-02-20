@@ -74,11 +74,25 @@ export function fetchWorkout(){
   }
 }
 
-// export function fetchWorkout(){
-//   const request = axios.get(`${ROOT_URL}/current_workout/2017-02-19?token=${localStorage.getItem('token')}`);
+export function deleteExercise(id){
+  return function(dispatch){
+    axios.post(`${ROOT_URL}/destroy_exercise?token=${localStorage.getItem('token')}`, {id})
+      .then(response => {
+        dispatch({
+          type: FETCH_WORKOUT,
+          payload: response
+        });
+      })
+      .catch(() => {
+        signoutUser();
+      });
+  }
+}
+
+// export function deleteExercise(id){
+//   const request = axios.post(`${ROOT_URL}/destroy_exercise?token=${localStorage.getItem('token')}`, {id});
 //   return {
-//     type: FETCH_WORKOUT,
-//     payload: request
+//     type: AUTH_ERROR
 //   }
 // }
 

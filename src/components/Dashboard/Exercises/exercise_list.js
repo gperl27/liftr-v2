@@ -2,10 +2,11 @@ import React from 'react';
 import Exercise from "./exercise";
 
 const ExerciseList = (props) => {
-  console.log(props);
   const exercises = props.exercises.map(exercise => {
     return (
         <Exercise
+          props={props.props}
+          handleDeleteExercise={props.handleDeleteExercise}
           key={exercise.id}
           exercise={exercise}
         />

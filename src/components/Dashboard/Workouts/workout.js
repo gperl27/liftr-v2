@@ -10,10 +10,9 @@ class Workout extends Component {
     this.props.fetchWorkout();
   }
 
-
-  // renderWorkout(){
-  //   console.log(this.props.workout.exercises);
-  // }
+  handleDeleteExercise(props, id){
+    props.deleteExercise(id);
+  }
 
   render() {
     if(!this.props.workout){
@@ -23,7 +22,11 @@ class Workout extends Component {
     return (
       <div>
         <h1>Today's Date</h1>
-        <ExerciseList exercises={this.props.workout.exercises} />
+        <ExerciseList
+            props={this.props}
+            handleDeleteExercise={this.handleDeleteExercise}
+            exercises={this.props.workout.exercises}
+        />
       </div>
     );
   }
