@@ -89,6 +89,23 @@ export function deleteExercise(id){
   }
 }
 
+export function updateExercise({id, name, sets, reps, weight}){
+  return function(dispatch){
+    axios.post(`${ROOT_URL}/exercise/${id}/update?token=${localStorage.getItem('token')}`, {name, sets, reps, weight})
+        .then(response => {
+          console.log('success');
+          dispatch({
+            type: FETCH_WORKOUT,
+            payload: response
+          });
+        })
+        .catch(() => {
+          console.log('failing');
+          signoutUser();
+        });
+  }
+}
+
 // export function deleteExercise(id){
 //   const request = axios.post(`${ROOT_URL}/destroy_exercise?token=${localStorage.getItem('token')}`, {id});
 //   return {

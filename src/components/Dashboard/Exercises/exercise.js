@@ -15,7 +15,7 @@ class Exercise extends Component {
     }
   }
 
-  handleToggleEdit(){
+  handleToggleEdit(id){
     if(this.state.active){
       let name = this.refs.name.value;
       let sets = this.refs.sets.value;
@@ -23,6 +23,7 @@ class Exercise extends Component {
       let weight = this.refs.weight.value;
 
       // send data to api
+      this.props.props.updateExercise({id, name, sets, reps, weight});
     }
 
     this.setState({ active: !this.state.active});
@@ -65,7 +66,7 @@ class Exercise extends Component {
                                           value={this.state.data.weight}
                                           onChange={this.handleChange.bind(this, 'weight')} />}
         </td>
-        <td onClick={this.handleToggleEdit.bind(this)}>{!this.state.active ? 'Edit' : 'Save'}</td>
+        <td onClick={this.handleToggleEdit.bind(this, this.props.exercise.id)}>{!this.state.active ? 'Edit' : 'Save'}</td>
         <td onClick={this.props.handleDeleteExercise.bind(null, this.props.props, this.props.exercise.id)}>Delete</td>
       </tr>
     )
