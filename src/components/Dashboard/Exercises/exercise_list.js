@@ -3,6 +3,11 @@ import Exercise from "./exercise";
 
 class ExerciseList extends Component {
   render(){
+    if(!this.props.exercises){
+      return ( <div>No exercises yet today!</div>);
+    }
+
+
     const exercises = this.props.exercises.map(exercise => {
       return (
         <Exercise

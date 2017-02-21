@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR,
-         FETCH_WORKOUT
+         FETCH_WORKOUT,
+         EXERCISE_ERROR
        } from './types';
 
 const ROOT_URL = 'http://localhost:8000/api/v1';
@@ -46,8 +47,8 @@ export function signupUser({email, password}){
   }
 }
 
+
 export function authError(error){
-  console.log(error);
   return {
     type: AUTH_ERROR,
     payload: error
@@ -59,9 +60,29 @@ export function signoutUser(){
   return { type: UNAUTH_USER }
 }
 
-export function fetchWorkout(){
+export function addExercise({date, name, sets, reps, weight}){
   return function(dispatch){
-    axios.get(`${ROOT_URL}/current_workout/2017-02-19?token=${localStorage.getItem('token')}`)
+    axios.post(`${ROOT_URL}/exercise/create?token=${localStorage.getItem('token')}`, { date, name, sets, reps, weight})
+    .then(response => {
+      dispatch({ type: FETCH_WORKOUT, payload: response });
+    })
+    .catch(() => {
+      dispatch(exerciseError('Could not add exercise'));
+    });
+  }
+}
+
+export function exerciseError(error){
+  return {
+    type: EXERCISE_ERROR,
+    payload: error
+  }
+}
+
+
+export function fetchWorkout({date}){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/current_workout/${date}?token=${localStorage.getItem('token')}`)
       .then(response => {
         dispatch({
           type: FETCH_WORKOUT,
@@ -93,32 +114,13 @@ export function updateExercise({id, name, sets, reps, weight}){
   return function(dispatch){
     axios.post(`${ROOT_URL}/exercise/${id}/update?token=${localStorage.getItem('token')}`, {name, sets, reps, weight})
         .then(response => {
-          console.log('success');
           dispatch({
             type: FETCH_WORKOUT,
             payload: response
           });
         })
         .catch(() => {
-          console.log('failing');
           signoutUser();
         });
   }
 }
-
-// export function deleteExercise(id){
-//   const request = axios.post(`${ROOT_URL}/destroy_exercise?token=${localStorage.getItem('token')}`, {id});
-//   return {
-//     type: AUTH_ERROR
-//   }
-// }
-
-// ^^ as redux promise
-// export function fetchMessage(){
-//   const request = axios.get(`${ROOT_URL}?token=${localStorage.getItem('token')}`);
-//
-//   return {
-//     type: FETCH_MESSAGE,
-//     payload: request
-//   };
-// }
