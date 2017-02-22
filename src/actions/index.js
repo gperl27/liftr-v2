@@ -1,11 +1,23 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR,
-         FETCH_WORKOUT,
+         FETCH_WORKOUT, FETCH_WORKOUTS, CURRENT_DATE,
          EXERCISE_ERROR
        } from './types';
 
 const ROOT_URL = 'http://localhost:8000/api/v1';
+
+//add to date prototype to play nice with api
+//source: http://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
+Date.prototype.yyyymmdd = function() {
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
+
+  return [this.getFullYear(),
+          (mm>9 ? '' : '0') + mm,
+          (dd>9 ? '' : '0') + dd
+        ].join('-');
+};
 
 
 // redux thunk allows us to return a FUNCTION rather than an OBJECT
@@ -55,6 +67,17 @@ export function authError(error){
   }
 }
 
+export function currentDate(data){
+  // console.log({date});
+  const day = new Date(data.date).yyyymmdd();
+  console.log(day);
+  // console.log(data.date.yyyymmdd());
+  return {
+    type: CURRENT_DATE,
+    payload: day
+  }
+}
+
 export function signoutUser(){
   localStorage.removeItem('token');
   return { type: UNAUTH_USER }
@@ -86,6 +109,36 @@ export function fetchWorkout({date}){
       .then(response => {
         dispatch({
           type: FETCH_WORKOUT,
+          payload: response
+        });
+      })
+      .catch(() => {
+        signoutUser();
+      });
+  }
+}
+
+export function updateWorkoutName({id, name}){
+  return function(dispatch){
+    axios.post(`${ROOT_URL}/workout/update_name?token=${localStorage.getItem('token')}`, { id, name })
+      .then(response => {
+        dispatch({
+          type: FETCH_WORKOUT,
+          payload: response
+        });
+      })
+      .catch(() => {
+        signoutUser();
+      });
+  }
+}
+
+export function fetchWorkouts(){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/workouts?token=${localStorage.getItem('token')}`)
+      .then(response => {
+        dispatch({
+          type: FETCH_WORKOUTS,
           payload: response
         });
       })

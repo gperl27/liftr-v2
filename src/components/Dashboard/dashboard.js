@@ -8,7 +8,7 @@ class Dashboard extends Component {
         <div className="col-md-2">
           <ul className="list-group">
             <li className="list-group-item"><Link className="nav-link" to="/dashboard/today">Today</Link></li>
-            <li className="list-group-item"><Link className="nav-link" to="/dashboard/calendar">Last Week Today</Link></li>
+            <li className="list-group-item"><Link className="nav-link" to="/dashboard/calendar">Calendar</Link></li>
           </ul>
         </div>
         <div className="col-md-10">

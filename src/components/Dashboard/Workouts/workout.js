@@ -4,6 +4,7 @@ import * as actions from '../../../actions';
 import { Link } from 'react-router';
 import ExerciseList from '../Exercises/exercise_list';
 import AddExercise from '../Exercises/add_exercise';
+import WorkoutName from './workout_name';
 import Time from 'react-time'
 
 //add to date prototype to play nice with api
@@ -22,11 +23,13 @@ class Workout extends Component {
   constructor(props){
     super(props);
 
-    this.state = { adding: false}
+    this.state = { adding: false, day: props.day }
   }
 
   componentWillMount(){
-    const date = new Date().yyyymmdd();
+    const date = new Date(this.state.day).yyyymmdd();
+    // console.log(this.props.day);
+
     this.props.fetchWorkout({date});
   }
 
@@ -48,9 +51,9 @@ class Workout extends Component {
     let workoutDate = now.yyyymmdd();
 
     return (
-      <div className="row">
-        <h1>Today is <Time value={now} format="YYYY/MM/DD" /></h1>
+      <div>
         <div className="col-md-6">
+          <WorkoutName updateName={this.props.updateWorkoutName} name={this.props.workout.name} id={this.props.workout.id} />
           <ExerciseList
             props={this.props}
             handleDeleteExercise={this.handleDeleteExercise}
@@ -67,7 +70,7 @@ class Workout extends Component {
 }
 
 function mapStateToProps(state){
-  return { workout: state.workout.workout };
+  return { workout: state.workout.workout, date: state.workout.date };
 }
 
 export default connect(mapStateToProps, actions)(Workout);

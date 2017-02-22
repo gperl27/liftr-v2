@@ -4,6 +4,7 @@ import Signout from './components/Auth/signout';
 import Signup from './components/Auth/signup';
 import Dashboard from './components/Dashboard/dashboard';
 import Welcome from './components/welcome';
+import TodayContainer from './components/Dashboard/today_container';
 import Workout from './components/Dashboard/Workouts/workout';
 import Calendar from './components/Dashboard/Calendar/calendar';
 import RequireAuth from './components/Auth/require_auth';
@@ -15,6 +16,7 @@ export {
   Signup,
   Dashboard,
   Welcome,
+  TodayContainer,
   Workout,
   Calendar,
   RequireAuth
