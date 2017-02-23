@@ -5,7 +5,8 @@ import { Link } from 'react-router';
 import ExerciseList from '../Exercises/exercise_list';
 import AddExercise from '../Exercises/add_exercise';
 import WorkoutName from './workout_name';
-import Time from 'react-time'
+import Time from 'react-time';
+import moment from 'moment';
 
 //add to date prototype to play nice with api
 //source: http://stackoverflow.com/questions/3066586/get-string-in-yyyymmdd-format-from-js-date-object
@@ -23,11 +24,11 @@ class Workout extends Component {
   constructor(props){
     super(props);
 
-    this.state = { adding: false, day: props.day }
+    this.state = { adding: false }
   }
 
   componentWillMount(){
-    const date = new Date(this.state.day).yyyymmdd();
+    const date = moment(this.props.day).format('YYYY-MM-DD');
     // console.log(this.props.day);
 
     this.props.fetchWorkout({date});
@@ -47,13 +48,17 @@ class Workout extends Component {
       return <div>...Loading</div>;
     }
 
-    let now = new Date();
-    let workoutDate = now.yyyymmdd();
+    // let workoutDate = moment(new Date()).format('YYYY-MM-DD');
 
     return (
       <div>
         <div className="col-md-6">
-          <WorkoutName updateName={this.props.updateWorkoutName} name={this.props.workout.name} id={this.props.workout.id} />
+          <WorkoutName
+            updateName={this.props.updateWorkoutName}
+            refreshWorkouts={this.props.fetchWorkouts}
+            name={this.props.workout.name}
+            id={this.props.workout.id}
+            />
           <ExerciseList
             props={this.props}
             handleDeleteExercise={this.handleDeleteExercise}
@@ -62,7 +67,7 @@ class Workout extends Component {
         </div>
         <div className="col-md-4">
           <button onClick={this.handleAddExercise.bind(this)}>{this.state.adding ? 'Cancel' : 'New Exercise'}</button>
-          {this.state.adding ? <AddExercise date={workoutDate} handleAddExercise={this.handleAddExercise.bind(this)} /> : null }
+          {this.state.adding ? <AddExercise date={this.props.day} handleAddExercise={this.handleAddExercise.bind(this)} /> : null }
         </div>
       </div>
     );
@@ -70,7 +75,7 @@ class Workout extends Component {
 }
 
 function mapStateToProps(state){
-  return { workout: state.workout.workout, date: state.workout.date };
+  return { workout: state.workout.workout };
 }
 
 export default connect(mapStateToProps, actions)(Workout);

@@ -24,13 +24,9 @@ class Calendar extends Component {
     this.props.fetchWorkouts();
   }
 
-  clickDay(d){
-    const date = new Date(d).yyyymmdd();
-    this.props.fetchWorkout({date})
-  }
-
-  renderWorkout(d){
-    return <Workout day={d} />
+  clickDay(date){
+    date = moment(date).format('YYYY-MM-DD');
+    this.props.fetchWorkout({date});
   }
 
   render() {
@@ -39,7 +35,7 @@ class Calendar extends Component {
       return <div>...Loading</div>;
     }
 
-    const date = new Date().yyyymmdd();
+    const now = moment(new Date()).format('YYYY-MM-DD');
 
     var events = this.props.workouts.map((workout) => {
       return {
@@ -59,12 +55,11 @@ class Calendar extends Component {
       <div>
         <BigCalendar style={divStyle}
           popup
-
           onSelectEvent={event => this.clickDay(event.start)}
           events={events}
           defaultDate={new Date()}
         />
-        {this.renderWorkout(date)}
+        <Workout day={now} />
       </div>
     );
   }

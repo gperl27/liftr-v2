@@ -127,6 +127,12 @@ export function updateWorkoutName({id, name}){
           payload: response
         });
       })
+      .then(response => {
+        dispatch({
+          type: FETCH_WORKOUTS,
+          payload: response
+        })
+      })
       .catch(() => {
         signoutUser();
       });
