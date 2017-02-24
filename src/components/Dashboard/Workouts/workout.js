@@ -54,10 +54,12 @@ class Workout extends Component {
       <div>
         <div className="col-md-6">
           <WorkoutName
+
             updateName={this.props.updateWorkoutName}
-            refreshWorkouts={this.props.fetchWorkouts}
-            name={this.props.workout.name}
+            refreshWorkout={this.props.fetchWorkout}
             id={this.props.workout.id}
+            name={this.props.workout.name}
+            day={this.props.day}
             />
           <ExerciseList
             props={this.props}

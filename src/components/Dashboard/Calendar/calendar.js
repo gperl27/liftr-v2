@@ -20,6 +20,12 @@ Date.prototype.yyyymmdd = function() {
 };
 
 class Calendar extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = { day: moment(new Date()).format('YYYY-MM-DD') };
+  }
+
   componentWillMount(){
     this.props.fetchWorkouts();
   }
@@ -27,6 +33,7 @@ class Calendar extends Component {
   clickDay(date){
     date = moment(date).format('YYYY-MM-DD');
     this.props.fetchWorkout({date});
+    this.setState({ day: date });
   }
 
   render() {
@@ -59,7 +66,7 @@ class Calendar extends Component {
           events={events}
           defaultDate={new Date()}
         />
-        <Workout day={now} />
+      <Workout day={this.state.day} />
       </div>
     );
   }

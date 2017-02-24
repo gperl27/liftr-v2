@@ -12,12 +12,16 @@ class WorkoutName extends Component {
 
   handleToggleEdit(){
     console.log(this.state);
+    console.log(this.props.name);
 
     if(this.state.active){
+
       const name = this.state.name;
       const id = this.props.id;
       this.props.updateName({id, name});
-      // this.props.refreshWorkouts();
+    } else {
+      const name = this.props.name;
+      this.setState({name});
     }
 
     this.setState({ active: !this.state.active});

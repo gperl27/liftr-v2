@@ -87,7 +87,7 @@ export function addExercise({date, name, sets, reps, weight}){
   return function(dispatch){
     axios.post(`${ROOT_URL}/exercise/create?token=${localStorage.getItem('token')}`, { date, name, sets, reps, weight})
     .then(response => {
-      dispatch({ type: FETCH_WORKOUT, payload: response });
+      dispatch({ type: FETCH_WORKOUT, payload: response.data });
     })
     .catch(() => {
       dispatch(exerciseError('Could not add exercise'));
@@ -109,7 +109,7 @@ export function fetchWorkout({date}){
       .then(response => {
         dispatch({
           type: FETCH_WORKOUT,
-          payload: response
+          payload: response.data
         });
       })
       .catch(() => {
@@ -124,16 +124,17 @@ export function updateWorkoutName({id, name}){
       .then(response => {
         dispatch({
           type: FETCH_WORKOUT,
-          payload: response
+          payload: response.data.workout
         });
-      })
-      .then(response => {
+        console.log('fetch ONE workout done');
         dispatch({
           type: FETCH_WORKOUTS,
-          payload: response
-        })
+          payload: response.data.workouts
+        });
+        console.log('fetch workouts done');
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log('error', error);
         signoutUser();
       });
   }
@@ -145,7 +146,7 @@ export function fetchWorkouts(){
       .then(response => {
         dispatch({
           type: FETCH_WORKOUTS,
-          payload: response
+          payload: response.data
         });
       })
       .catch(() => {
@@ -160,7 +161,7 @@ export function deleteExercise(id){
       .then(response => {
         dispatch({
           type: FETCH_WORKOUT,
-          payload: response
+          payload: response.data
         });
       })
       .catch(() => {
@@ -175,7 +176,7 @@ export function updateExercise({id, name, sets, reps, weight}){
         .then(response => {
           dispatch({
             type: FETCH_WORKOUT,
-            payload: response
+            payload: response.data
           });
         })
         .catch(() => {
