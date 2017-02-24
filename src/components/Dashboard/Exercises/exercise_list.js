@@ -4,7 +4,11 @@ import Exercise from "./exercise";
 class ExerciseList extends Component {
   render(){
     if(!this.props.exercises){
-      return ( <div>No exercises yet today!</div>);
+      return ( <div>Loading...</div>);
+    }
+
+    if(this.props.exercises.length === 0){
+      return <div>No exercises yet today!</div>
     }
 
 

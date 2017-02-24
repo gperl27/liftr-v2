@@ -5,7 +5,8 @@ export const AUTH_ERROR  = 'auth_error';
 
 export const FETCH_WORKOUT = 'fetch_workout';
 export const FETCH_WORKOUTS = 'fetch_workouts';
-export const CURRENT_DATE = 'current_date';
+export const WORKOUT_ERROR = 'workout_error';
+// export const CURRENT_DATE = 'current_date';
 
 
 export const EXERCISE_ERROR  = 'exercise_error';

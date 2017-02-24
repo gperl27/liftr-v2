@@ -4,6 +4,7 @@ import * as actions from '../../../actions';
 import { Link } from 'react-router';
 import ExerciseList from '../Exercises/exercise_list';
 import AddExercise from '../Exercises/add_exercise';
+import AddWorkout from './add_workout';
 import WorkoutName from './workout_name';
 import Time from 'react-time';
 import moment from 'moment';
@@ -44,17 +45,22 @@ class Workout extends Component {
 
   render() {
 
+    // wait for data to come in before trying to render component
     if(!this.props.workout){
       return <div>...Loading</div>;
     }
 
-    // let workoutDate = moment(new Date()).format('YYYY-MM-DD');
+    // Prompt user to add new workout if there is none for that day
+    if(!Object.keys(this.props.workout).length > 0){
+      return (
+        <AddWorkout day={this.props.day} addWorkout={this.props.addWorkout} />
+      )
+    }
 
     return (
       <div>
         <div className="col-md-6">
           <WorkoutName
-
             updateName={this.props.updateWorkoutName}
             refreshWorkout={this.props.fetchWorkout}
             id={this.props.workout.id}

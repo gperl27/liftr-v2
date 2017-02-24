@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR,
-         FETCH_WORKOUT, FETCH_WORKOUTS, CURRENT_DATE,
+         FETCH_WORKOUT, FETCH_WORKOUTS, WORKOUT_ERROR,
          EXERCISE_ERROR
        } from './types';
 
@@ -67,16 +67,17 @@ export function authError(error){
   }
 }
 
-export function currentDate(data){
-  // console.log({date});
-  const day = new Date(data.date).yyyymmdd();
-  console.log(day);
-  // console.log(data.date.yyyymmdd());
-  return {
-    type: CURRENT_DATE,
-    payload: day
-  }
-}
+// deprecated
+// export function currentDate(data){
+//   // console.log({date});
+//   const day = new Date(data.date).yyyymmdd();
+//   console.log(day);
+//   // console.log(data.date.yyyymmdd());
+//   return {
+//     type: CURRENT_DATE,
+//     payload: day
+//   }
+// }
 
 export function signoutUser(){
   localStorage.removeItem('token');
@@ -92,6 +93,32 @@ export function addExercise({date, name, sets, reps, weight}){
     .catch(() => {
       dispatch(exerciseError('Could not add exercise'));
     });
+  }
+}
+
+export function addWorkout({day, name}){
+  return function(dispatch){
+    axios.post(`${ROOT_URL}/workout/create?token=${localStorage.getItem('token')}`, { day, name})
+    .then(response => {
+      dispatch({
+        type: FETCH_WORKOUT,
+        payload: response.data.workout
+      });
+      dispatch({
+        type: FETCH_WORKOUTS,
+        payload: response.data.workouts
+      });
+    })
+    .catch(() => {
+      dispatch(workoutError('Could not add workout'));
+    });
+  }
+}
+
+export function workoutError(error){
+  return {
+    type: WORKOUT_ERROR,
+    payload: error
   }
 }
 
@@ -126,12 +153,10 @@ export function updateWorkoutName({id, name}){
           type: FETCH_WORKOUT,
           payload: response.data.workout
         });
-        console.log('fetch ONE workout done');
         dispatch({
           type: FETCH_WORKOUTS,
           payload: response.data.workouts
         });
-        console.log('fetch workouts done');
       })
       .catch((error) => {
         console.log('error', error);

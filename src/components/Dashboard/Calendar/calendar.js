@@ -62,7 +62,9 @@ class Calendar extends Component {
       <div>
         <BigCalendar style={divStyle}
           popup
+          selectable
           onSelectEvent={event => this.clickDay(event.start)}
+          onSelectSlot={(slotInfo) => this.clickDay(slotInfo.start)}
           events={events}
           defaultDate={new Date()}
         />
