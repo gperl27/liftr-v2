@@ -115,6 +115,25 @@ export function addWorkout({day, name}){
   }
 }
 
+export function deleteWorkout({workoutId}){
+  return function(dispatch){
+    axios.post(`${ROOT_URL}/workout/destroy?token=${localStorage.getItem('token')}`, {workoutId})
+    .then(response => {
+      dispatch({
+        type: FETCH_WORKOUT,
+        payload: response.data.workout
+      });
+      dispatch({
+        type: FETCH_WORKOUTS,
+        payload: response.data.workouts
+      });
+    })
+    .catch(() => {
+      dispatch(workoutError('Could not add workout'));
+    });
+  }
+}
+
 export function workoutError(error){
   return {
     type: WORKOUT_ERROR,

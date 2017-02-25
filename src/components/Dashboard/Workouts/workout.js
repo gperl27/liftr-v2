@@ -30,9 +30,13 @@ class Workout extends Component {
 
   componentWillMount(){
     const date = moment(this.props.day).format('YYYY-MM-DD');
-    // console.log(this.props.day);
-
     this.props.fetchWorkout({date});
+  }
+
+  handleDeleteWorkout(){
+    const workoutId = this.props.workout.id;
+    // const date = this.props.workout.day;
+    this.props.deleteWorkout({workoutId});
   }
 
   handleDeleteExercise(props, id){
@@ -76,6 +80,7 @@ class Workout extends Component {
         <div className="col-md-4">
           <button onClick={this.handleAddExercise.bind(this)}>{this.state.adding ? 'Cancel' : 'New Exercise'}</button>
           {this.state.adding ? <AddExercise date={this.props.day} handleAddExercise={this.handleAddExercise.bind(this)} /> : null }
+          <button onClick={this.handleDeleteWorkout.bind(this)}>X Delete</button>
         </div>
       </div>
     );
