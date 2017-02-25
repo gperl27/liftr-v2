@@ -2,6 +2,14 @@ html, body {
   height: 100%;
 }
 
+body {
+  font-family: 'Asap', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Flamenco', cursive !important;
+}
+
 .error {
   color: red;
 }
@@ -35,6 +43,10 @@ html, body {
   color: #F1F0FF;
 }
 
+.nav-link:hover {
+  color: #C3C3E5;
+}
+
 .selected .nav-link {
-  color: yellow;
+  color: #8C489F;
 }
