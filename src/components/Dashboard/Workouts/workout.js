@@ -77,9 +77,11 @@ class Workout extends Component {
             exercises={this.props.workout.exercises}
             />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-2">
           <button onClick={this.handleAddExercise.bind(this)}>{this.state.adding ? 'Cancel' : 'New Exercise'}</button>
           {this.state.adding ? <AddExercise date={this.props.day} handleAddExercise={this.handleAddExercise.bind(this)} /> : null }
+        </div>
+        <div className="col-md-2">
           <button onClick={this.handleDeleteWorkout.bind(this)}>X Delete</button>
         </div>
       </div>

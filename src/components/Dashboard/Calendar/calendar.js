@@ -68,6 +68,7 @@ class Calendar extends Component {
           events={events}
           defaultDate={new Date()}
         />
+      <h1>{this.state.day}</h1>
       <Workout day={this.state.day} />
       </div>
     );

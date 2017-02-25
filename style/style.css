@@ -1,3 +1,40 @@
+html, body {
+  height: 100%;
+}
+
 .error {
   color: red;
+}
+
+.header {
+  margin-left: 200px;
+  /*float: right;*/
+}
+
+.sidebar {
+  text-align: center;
+  position: fixed !important;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  background-color: #443266;
+  width: 200px;
+}
+
+.content {
+  margin-left: 200px;
+  width: auto;
+}
+
+.list-group-item {
+  background-color: #443266 !important;
+  border: none !important;
+}
+
+.nav-link {
+  color: #F1F0FF;
+}
+
+.selected .nav-link {
+  color: yellow;
 }
