@@ -63,27 +63,23 @@ class Workout extends Component {
 
     return (
       <div>
-        <div className="col-md-6">
-          <WorkoutName
-            updateName={this.props.updateWorkoutName}
-            refreshWorkout={this.props.fetchWorkout}
-            id={this.props.workout.id}
-            name={this.props.workout.name}
-            day={this.props.day}
-            />
-          <ExerciseList
-            props={this.props}
-            handleDeleteExercise={this.handleDeleteExercise}
-            exercises={this.props.workout.exercises}
-            />
-        </div>
-        <div className="col-md-2">
-          <button onClick={this.handleAddExercise.bind(this)}>{this.state.adding ? 'Cancel' : 'New Exercise'}</button>
+        <WorkoutName
+          updateName={this.props.updateWorkoutName}
+          refreshWorkout={this.props.fetchWorkout}
+          id={this.props.workout.id}
+          name={this.props.workout.name}
+          day={this.props.day}
+          />
+        <button className="workoutHeader btn btn-danger" onClick={this.handleDeleteWorkout.bind(this)}>X</button>
+        <div>
+          <button className="btn btn-secondary" onClick={this.handleAddExercise.bind(this)}>{this.state.adding ? 'Cancel' : 'New Exercise'}</button>
           {this.state.adding ? <AddExercise date={this.props.day} handleAddExercise={this.handleAddExercise.bind(this)} /> : null }
         </div>
-        <div className="col-md-2">
-          <button onClick={this.handleDeleteWorkout.bind(this)}>X Delete</button>
-        </div>
+        <ExerciseList
+          props={this.props}
+          handleDeleteExercise={this.handleDeleteExercise}
+          exercises={this.props.workout.exercises}
+          />
       </div>
     );
   }

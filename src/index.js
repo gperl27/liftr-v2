@@ -32,8 +32,8 @@ ReactDOM.render(
         <Route path="signout" component={Signout} />
         <Route path="signup" component={Signup} />
         <Route path="dashboard" component={RequireAuth(Dashboard)}>
-          <Route path="today" component={TodayContainer} />
-          <Route path="calendar" component={Calendar} />
+          <Route path="today" value={0} component={TodayContainer} />
+          <Route path="calendar" value={1} component={Calendar} />
         </Route>
       </Route>
     </Router>

@@ -36,38 +36,59 @@ class Exercise extends Component {
   }
 
   render(){
+    const styles = {
+      numberStyle : {
+        'width' : '50px'
+      },
+      textStyle : {
+        'width' : '250px'
+      },
+      editStyle : {
+        'color' : '#8C489F',
+        'cursor' : 'pointer'
+      },
+      deleteStyle : {
+        'color' : 'red',
+        'cursor' : 'pointer'
+      }
+    }
+
     return (
       <tr>
         <td>{ !this.state.active ? <div>{this.state.data.name}</div> :
-                                   <input ref="name"
-                                          placeholder="please work"
+                                   <input style={styles.textStyle}
+                                          ref="name"
+                                          placeholder="Exercise name"
                                           type="text" value={this.state.data.name}
                                           onChange={this.handleChange.bind(this, 'name')}
                                      />
              }
         </td>
         <td>{ !this.state.active ? <div>{this.state.data.sets}</div> :
-                                   <input ref="sets"
-                                          placeholder="please work"
+                                   <input style={styles.numberStyle}
+                                          ref="sets"
+                                          placeholder="3"
                                           type="number"
                                           value={this.state.data.sets}
                                           onChange={this.handleChange.bind(this, 'sets')} />}
         </td>
         <td>{ !this.state.active ? <div>{this.state.data.reps}</div> :
-                                   <input ref="reps"
-                                          placeholder="please work"
+                                   <input style={styles.numberStyle}
+                                          ref="reps"
+                                          placeholder="10"
                                           type="number" value={this.state.data.reps}
                                           onChange={this.handleChange.bind(this, 'reps')} />}
         </td>
         <td>{ !this.state.active ? <div>{this.state.data.weight}</div> :
-                                   <input ref="weight"
-                                          placeholder="please work"
+                                   <input style={styles.numberStyle}
+                                          ref="weight"
+                                          placeholder="150"
                                           type="number"
                                           value={this.state.data.weight}
                                           onChange={this.handleChange.bind(this, 'weight')} />}
         </td>
-        <td onClick={this.handleToggleEdit.bind(this, this.props.exercise.id)}>{!this.state.active ? 'Edit' : 'Save'}</td>
-        <td onClick={this.props.handleDeleteExercise.bind(null, this.props.props, this.props.exercise.id)}>Delete</td>
+        <td style={styles.editStyle} onClick={this.handleToggleEdit.bind(this, this.props.exercise.id)}>{!this.state.active ? 'Edit' : 'Save'}</td>
+        <td style={styles.deleteStyle} onClick={this.props.handleDeleteExercise.bind(null, this.props.props, this.props.exercise.id)}>Delete</td>
       </tr>
     )
   }

@@ -11,11 +11,7 @@ class WorkoutName extends Component {
   }
 
   handleToggleEdit(){
-    console.log(this.state);
-    console.log(this.props.name);
-
     if(this.state.active){
-
       const name = this.state.name;
       const id = this.props.id;
       this.props.updateName({id, name});
@@ -34,10 +30,11 @@ class WorkoutName extends Component {
 
   render(){
     return (
-      <div>
-        { !this.state.active ? <h3>{this.props.name}</h3> :
-        <input type="text" value={this.state.name} onChange={this.handleNameChange.bind(this)} /> }
-          <span onClick={this.handleToggleEdit.bind(this)}>{ !this.state.active ? 'Edit' : 'Save' }</span>
+      <div className="workoutHeader">
+        { !this.state.active ? <h3 className="workoutHeader">{this.props.name}</h3> :
+        <input type="text" value={this.state.name} onChange={this.handleNameChange.bind(this)} />
+        }
+        <span className="btn btn-warning" onClick={this.handleToggleEdit.bind(this)}>{ !this.state.active ? 'Change Name' : 'Save' }</span>
       </div>
     )
   }

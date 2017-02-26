@@ -1,93 +1,51 @@
 import React, { Component } from 'react';
-import Sidebar from 'react-sidebar';
+import { Link } from 'react-router';
+import FontAwesome from 'react-fontawesome';
+// save nav where left off if user reloads the page
+let nav = localStorage.getItem('nav');
+if(!nav){
+  nav = '';
+}
 
-export default class Menu extends Component {
+export default class Sidebar extends Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      sidebarOpen: false, sidebarDocked: false
-    }
+    this.state = { selected : nav };
   }
 
-  onSetSidebarOpen(open) {
-    this.setState({sidebarOpen: open});
+  handleNavClick(e){
+    const value = e.target.getAttribute('value');
+    this.setState({selected: value});
+    localStorage.setItem('nav', value);
   }
 
-  componentWillMount() {
-    var mql = window.matchMedia(`(min-width: 800px)`);
-    mql.addListener(this.mediaQueryChanged);
-    this.setState({mql: mql, sidebarDocked: mql.matches});
-  }
-
-  componentWillUnmount() {
-    this.state.mql.removeListener(this.mediaQueryChanged);
-  }
-
-  mediaQueryChanged() {
-    this.setState({sidebarDocked: this.state.mql.matches});
+  forgetNav(){
+    localStorage.removeItem('nav');
   }
 
   render() {
-    const styles = {
-      root: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        overflow: 'hidden',
-      },
-      sidebar: {
-        zIndex: 2,
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        transition: 'transform .3s ease-out',
-        WebkitTransition: '-webkit-transform .3s ease-out',
-        willChange: 'transform',
-        overflowY: 'auto',
-      },
-      content: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        overflow: 'auto',
-        transition: 'left .3s ease-out, right .3s ease-out',
-      },
-      overlay: {
-        zIndex: 1,
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        opacity: 0,
-        visibility: 'hidden',
-        transition: 'opacity .3s ease-out',
-        backgroundColor: 'rgba(0,0,0,.3)',
-      },
-      dragHandle: {
-        zIndex: 1,
-        position: 'fixed',
-        top: 0,
-        bottom: 0,
-      },
-    }
-
-    var sidebarContent = <b>Sidebar content</b>;
-
     return (
-      <Sidebar style={styles} sidebar={sidebarContent}
-               open={this.state.sidebarOpen}
-               docked={this.state.sidebarDocked}
-               onSetOpen={this.onSetSidebarOpen}>
-        <b>Main content</b>
-      </Sidebar>
+      <div className="sidebar">
+        <h1><Link className="nav-link" to="/">Liftr</Link></h1>
+        <ul className="list-group">
+          <li className={this.state.selected === '0' ? 'selected list-group-item' : 'list-group-item' }>
+            <FontAwesome className="icons" name='star'  />
+            <Link onClick={this.handleNavClick.bind(this)} value={0} className='nav-link' to="/dashboard/today">
+              Today
+            </Link>
+          </li>
+          <li className={this.state.selected === '1' ? 'selected list-group-item' : 'list-group-item' }>
+            <FontAwesome className="icons" name='calendar'  />
+            <Link onClick={this.handleNavClick.bind(this)} value={1} className='nav-link'  to="/dashboard/calendar">Calendar</Link>
+          </li>
+          <li className="list-group-item">
+            <Link onClick={this.forgetNav.bind(this)} className="nav-link" to="/signout">Sign Out</Link>
+          </li>
+        </ul>
+      </div>
     );
   }
 }
 
-module.exports = Menu;
+module.exports = Sidebar;

@@ -35,7 +35,8 @@ class AddWorkout extends Component {
     const { handleSubmit, fields: { name }} = this.props;
     return (
       <div>
-          <button onClick={this.toggleForm.bind(this)}>{ !this.state.active ? 'Workout +' : 'Cancel' }</button>
+          <h3>No workouts found for today</h3>
+          <button className="btn btn-warning" onClick={this.toggleForm.bind(this)}>{ !this.state.active ? 'Add Workout +' : 'Cancel' }</button>
           { this.state.active ? <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
             <fieldset className="form-group">
               <label>Name:</label>
@@ -43,7 +44,7 @@ class AddWorkout extends Component {
               {name.touched && name.error && <div className="error">{name.error}</div>}
             </fieldset>
             {this.renderAlert()}
-            <button action="submit" className="btn btn-primary">Add Workout</button>
+            <button action="submit" className="btn btn-primary">Save</button>
           </form> : null }
       </div>
     );

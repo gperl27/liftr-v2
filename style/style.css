@@ -16,7 +16,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .header {
   margin-left: 200px;
-  /*float: right;*/
 }
 
 .sidebar {
@@ -27,6 +26,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 100vh;
   background-color: #443266;
   width: 200px;
+  padding-top: 25px;
 }
 
 .content {
@@ -39,14 +39,22 @@ h1, h2, h3, h4, h5, h6 {
   border: none !important;
 }
 
-.nav-link {
-  color: #F1F0FF;
+.nav-link, .icons {
+  color: #F1F0FF !important;
 }
 
-.nav-link:hover {
-  color: #C3C3E5;
+.nav-link:hover, .icons:hover {
+  color: #C3C3E5 !important;
 }
 
-.selected .nav-link {
-  color: #8C489F;
+.selected .icons, .selected .nav-link{
+  color: #8C489F !important;
+}
+
+.icons {
+  margin-right: 5px;
+}
+
+.workoutHeader {
+  display: inline-block;
 }

@@ -81,6 +81,7 @@ export function authError(error){
 
 export function signoutUser(){
   localStorage.removeItem('token');
+  localStorage.removeItem('nav');
   return { type: UNAUTH_USER }
 }
 
