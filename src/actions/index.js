@@ -2,7 +2,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERROR,
          FETCH_WORKOUT, FETCH_WORKOUTS, WORKOUT_ERROR,
-         EXERCISE_ERROR
+         UNIQUE_EXERCISES, EXERCISE_STATS, EXERCISE_ERROR
        } from './types';
 
 const ROOT_URL = 'http://localhost:8000/api/v1';
@@ -221,6 +221,36 @@ export function updateExercise({id, name, sets, reps, weight}){
         .then(response => {
           dispatch({
             type: FETCH_WORKOUT,
+            payload: response.data
+          });
+        })
+        .catch(() => {
+          signoutUser();
+        });
+  }
+}
+
+export function exerciseStats({name}){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/exercise/${name}?token=${localStorage.getItem('token')}`)
+        .then(response => {
+          dispatch({
+            type: EXERCISE_STATS,
+            payload: response.data
+          });
+        })
+        .catch(() => {
+          signoutUser();
+        });
+  }
+}
+
+export function uniqueExercises(){
+  return function(dispatch){
+    axios.get(`${ROOT_URL}/exercises?token=${localStorage.getItem('token')}`)
+        .then(response => {
+          dispatch({
+            type: UNIQUE_EXERCISES,
             payload: response.data
           });
         })

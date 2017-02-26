@@ -39,6 +39,10 @@ export default class Sidebar extends Component {
             <FontAwesome className="icons" name='calendar'  />
             <Link onClick={this.handleNavClick.bind(this)} value={1} className='nav-link'  to="/dashboard/calendar">Calendar</Link>
           </li>
+          <li className={this.state.selected === '2' ? 'selected list-group-item' : 'list-group-item' }>
+            <FontAwesome className="icons" name='area-chart'  />
+            <Link onClick={this.handleNavClick.bind(this)} value={2} className='nav-link'  to="/dashboard/analytics">Progress</Link>
+          </li>
           <li className="list-group-item">
             <Link onClick={this.forgetNav.bind(this)} className="nav-link" to="/signout">Sign Out</Link>
           </li>

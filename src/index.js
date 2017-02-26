@@ -8,7 +8,7 @@ import promise from 'redux-promise';
 
 // Components
 import { App, Welcome, Signin, Signout, Signup,  Dashboard, TodayContainer,
-  Workout, Calendar, RequireAuth } from './files_module';
+  Workout, Calendar, Analytics, RequireAuth } from './files_module';
 // Reducers/Store/Auth
 import reducers from './reducers';
 import { AUTH_USER } from './actions/types';
@@ -32,8 +32,9 @@ ReactDOM.render(
         <Route path="signout" component={Signout} />
         <Route path="signup" component={Signup} />
         <Route path="dashboard" component={RequireAuth(Dashboard)}>
-          <Route path="today" value={0} component={TodayContainer} />
-          <Route path="calendar" value={1} component={Calendar} />
+          <Route path="today" component={TodayContainer} />
+          <Route path="calendar" component={Calendar} />
+          <Route path="analytics" component={Analytics} />
         </Route>
       </Route>
     </Router>
